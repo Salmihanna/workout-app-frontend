@@ -1,10 +1,12 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
-import Footer from "./components/Footer/Footer";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./views/Home";
+import Run from "./views/Run";
 import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
+import Workout from "./views/Workout";
+import Yoga from "./views/Yoga";
 
 function App() {
   return (
@@ -15,6 +17,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/workout" element={<Workout />} />
+          <Route path="/run" element={<Run />} />
+          <Route path="/yoga" element={<Yoga />} />
         </Routes>
       </Router>
     </>

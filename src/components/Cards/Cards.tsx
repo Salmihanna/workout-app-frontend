@@ -1,4 +1,4 @@
-import Card from "./Card";
+import Card from "./components/Card";
 import "./Cards.css";
 
 const Cards = () => {
@@ -12,13 +12,13 @@ const Cards = () => {
               src="images/yoga-nr1.jpg"
               text="Yoga for beginners"
               label="Yoga"
-              path="/workout"
+              path="/yoga"
             />
             <Card
               src="images/run-nr1.jpg"
               text="Start running"
               label="Run"
-              path="/workout"
+              path="/run"
             />
             <Card
               src="images/workout-nr1.jpg"

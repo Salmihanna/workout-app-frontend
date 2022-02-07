@@ -4,10 +4,10 @@ import "./HeaderSection.css";
 
 const HeaderSection = () => {
   return (
-    <div className="hero-container">
+    <div className="header-container">
       <h1>YOUR FITNESS JOURNEY</h1>
       <p>What are you waiting for?</p>
-      <div className="hero-btns">
+      <div className="header-btns">
         <Button
           className="btns"
           buttenStyle="btn--outline"
