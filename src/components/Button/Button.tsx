@@ -12,7 +12,7 @@ const SIZES = ["btn--medium", "btn--large"];
 type ButtonProps = {
   children?: string;
   type?: "button" | "submit" | "reset" | undefined;
-  onClick?: () => {};
+  onClick?: () => void;
   buttenStyle?: string;
   buttenSize?: string;
   className?: string;
@@ -37,7 +37,8 @@ export const Button = ({
     : SIZES[0];
 
   return (
-    <Link to={to || "/"} className="btn-mobile">
+    <>
+      {/*<Link to={to || "/"} className="btn-mobile"> */}
       <button
         className={`btn ${checkButtonStyle} ${checkButtenSize}`}
         onClick={onClick}
@@ -46,6 +47,7 @@ export const Button = ({
       >
         {children}
       </button>
-    </Link>
+      {/*</Link>*/}
+    </>
   );
 };

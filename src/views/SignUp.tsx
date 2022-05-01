@@ -1,7 +1,12 @@
 import "../App.css";
+import SignUpForm from "../components/SignUpForm/SignUpForm";
 
 const SignUp = () => {
-  return <h1 className="sign-up">Sign up</h1>;
+  return (
+    <>
+      <SignUpForm />
+    </>
+  );
 };
 
 export default SignUp;
