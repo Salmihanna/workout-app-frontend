@@ -5,17 +5,39 @@ import "./SignInForm.css";
 import axios from "axios";
 
 const SignInForm = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassWord] = useState("");
 
   const validateForm = () => {
-    return email.length > 0 && password.length > 0;
+    return username.length > 0 && password.length > 0;
   };
 
-  const handleSubmit = () => {
-    axios.post("/api/v1/login").then((res) => {
-      console.log(res);
-    });
+  const handleSubmit = async () => {
+    try {
+      await fetch("http://localhost:8080/api/v1/sign-in", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          Accept: "application/json",
+          ContentType: "application/json",
+          AccessControlAllowOrigin: "*",
+          // "Access-Control-Allow-Methods": "POST",
+          // "Access-Control-Allow-Headers": "*",
+        },
+        body: JSON.stringify({ username: username, password: password }),
+      });
+      // await axios.post("http://localhost:8080/api/v1/sign-in", {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     "Access-Control-Allow-Origin": "*",
+      //   },
+      //   data: { username: username, password: password },
+      //   withCredentials: true,
+      // });
+    } catch (e) {
+      console.log(e);
+    }
+    console.log(username, " ", password);
   };
 
   return (
@@ -28,21 +50,15 @@ const SignInForm = () => {
         />
       </div>
       <div>
-        {/* <form
-        method="POST"
-        action="http://localhost:8080/api/v1/login"
-        className="sign-in-form"
-        onSubmit={handleSubmit}
-      > */}
         <h1 className="sign-in-form-title">Log back into your account</h1>
         <div className="sign-in-form-input">
           <input
             className="form-items"
-            name="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Your email"
+            name="username"
+            type="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
           ></input>
         </div>
         <div className="sign-in-form-input">
@@ -64,10 +80,9 @@ const SignInForm = () => {
             disabled={!validateForm()}
             onClick={handleSubmit}
           >
-            Login
+            Sign in
           </Button>
         </div>
-        {/* </form> */}
       </div>
     </div>
   );

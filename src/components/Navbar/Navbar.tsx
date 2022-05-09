@@ -60,15 +60,10 @@ const Navbar = () => {
                 className="nav-links-mobile"
                 onClick={closeMobileMenu}
               >
-                Login
+                Sign in
               </Link>
             </li>
           </ul>
-          {button && (
-            <Button to="sign-in" buttenStyle="btn--outline">
-              Login
-            </Button>
-          )}
         </div>
       </nav>
     </>

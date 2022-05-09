@@ -16,7 +16,6 @@ type ButtonProps = {
   buttenStyle?: string;
   buttenSize?: string;
   className?: string;
-  to?: string;
   disabled?: boolean;
 };
 
@@ -26,7 +25,6 @@ export const Button = ({
   onClick,
   buttenSize,
   buttenStyle,
-  to,
   disabled,
 }: ButtonProps) => {
   const checkButtonStyle = STYLES.includes(buttenStyle || "")
@@ -38,7 +36,7 @@ export const Button = ({
 
   return (
     <>
-      {/*<Link to={to || "/"} className="btn-mobile"> */}
+      {/* <Link to={to || "/"}> */}
       <button
         className={`btn ${checkButtonStyle} ${checkButtenSize}`}
         onClick={onClick}
@@ -47,7 +45,7 @@ export const Button = ({
       >
         {children}
       </button>
-      {/*</Link>*/}
+      {/* </Link> */}
     </>
   );
 };

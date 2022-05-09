@@ -1,6 +1,7 @@
 import { Button } from "../Button/Button";
 import "../../App.css";
 import "./HeaderSection.css";
+import { Link } from "react-router-dom";
 
 const HeaderSection = () => {
   return (
@@ -8,22 +9,24 @@ const HeaderSection = () => {
       <h1>YOUR FITNESS JOURNEY</h1>
       <p>What are you waiting for?</p>
       <div className="header-btns">
-        <Button
-          className="btns"
-          buttenStyle="btn--outline"
-          buttenSize="btn--large"
-          to="sign-up"
-        >
-          Start training
-        </Button>
-        <Button
-          className="btns"
-          buttenStyle="btn--primary"
-          buttenSize="btn--large"
-          to="sign-in"
-        >
-          Login
-        </Button>
+        <Link to={"/sign-up"}>
+          <Button
+            className="btns"
+            buttenStyle="btn--outline"
+            buttenSize="btn--large"
+          >
+            Start training
+          </Button>
+        </Link>
+        <Link to={"/sign-in"}>
+          <Button
+            className="btns"
+            buttenStyle="btn--primary"
+            buttenSize="btn--large"
+          >
+            Sign in
+          </Button>
+        </Link>
       </div>
     </div>
   );
