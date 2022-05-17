@@ -7,7 +7,7 @@ type ListExercisesProps = {
 };
 
 const ListExercises = () => {
-  const API_GET_ALL_EXERCISES = "http://localhost:8080/api/exercises";
+  const API_GET_ALL_EXERCISES = "http://localhost:8080/api/v1/exercises";
 
   const [allExercises, setAllExercises] = useState<ListExercisesProps[]>([]);
 

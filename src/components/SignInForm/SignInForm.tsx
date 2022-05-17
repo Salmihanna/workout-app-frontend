@@ -3,10 +3,12 @@ import { Button } from "../Button/Button";
 import "../../App.css";
 import "./SignInForm.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignInForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassWord] = useState("");
+  const navigate = useNavigate();
 
   const validateForm = () => {
     return username.length > 0 && password.length > 0;
@@ -14,30 +16,23 @@ const SignInForm = () => {
 
   const handleSubmit = async () => {
     try {
-      await fetch("http://localhost:8080/api/v1/sign-in", {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          Accept: "application/json",
-          ContentType: "application/json",
-          AccessControlAllowOrigin: "*",
-          // "Access-Control-Allow-Methods": "POST",
-          // "Access-Control-Allow-Headers": "*",
-        },
-        body: JSON.stringify({ username: username, password: password }),
-      });
-      // await axios.post("http://localhost:8080/api/v1/sign-in", {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     "Access-Control-Allow-Origin": "*",
-      //   },
-      //   data: { username: username, password: password },
-      //   withCredentials: true,
-      // });
+      await axios
+        .post("http://localhost:8080/api/v1/sign-in", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          username,
+          password,
+        })
+        .then((res) => {
+          if (res.data.jwt) {
+            window.localStorage.setItem("jwt", res.data.jwt);
+            navigate("/profile");
+          }
+        });
     } catch (e) {
-      console.log(e);
+      console.log("error", e);
     }
-    console.log(username, " ", password);
   };
 
   return (

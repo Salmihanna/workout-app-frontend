@@ -49,9 +49,18 @@ const Navbar = () => {
                 Workout
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to="/run" className="nav-links" onClick={closeMobileMenu}>
                 Running
+              </Link>
+            </li> */}
+            <li className="nav-item">
+              <Link
+                to="/profile"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
+                Profile
               </Link>
             </li>
             <li className="nav-item">
