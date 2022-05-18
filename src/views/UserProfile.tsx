@@ -1,17 +1,37 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { parseJwt } from "../util/parse-jwt";
 
 const UserProfile = () => {
-  // useEffect(() => {
-  //   axios.get("http://localhost:8080/api/v1/sign-in");
-  // }, []);
+  const token = localStorage.getItem("jwt") ?? "";
+  const jwt = parseJwt(token);
+  const API_URL = `http://localhost:8080/api/v1/profile?id=${jwt.id}`;
+  const navigate = useNavigate();
+  const [firstName, setFirstName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(API_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setFirstName(res?.data?.firstName);
+        setUsername(res?.data?.username);
+        setEmail(res?.data?.email);
+      })
+      .catch(() => navigate("/sign-in"));
+  }, []);
 
   return (
     <div>
-      <h1>Profile</h1>
-      <h2>Name: </h2>
-      <h2>Username: </h2>
-      <h2>email: </h2>
+      <h1>Welcome back {firstName}</h1>
+      <h2>Username: {username}</h2>
+      <h2>Email: {email}</h2>
     </div>
   );
 };
