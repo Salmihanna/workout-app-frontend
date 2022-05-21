@@ -6,7 +6,7 @@ import { parseJwt } from "../util/parse-jwt";
 const UserProfile = () => {
   const token = localStorage.getItem("jwt") ?? "";
   const jwt = parseJwt(token);
-  const API_URL = `http://localhost:8080/api/v1/profile?id=${jwt.id}`;
+  const API_URL_WITH_JWT = `http://localhost:8080/api/v1/profile?id=${jwt.id}`;
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [username, setUsername] = useState("");
@@ -14,7 +14,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     axios
-      .get(API_URL, {
+      .get(API_URL_WITH_JWT, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -24,7 +24,10 @@ const UserProfile = () => {
         setUsername(res?.data?.username);
         setEmail(res?.data?.email);
       })
-      .catch(() => navigate("/sign-in"));
+      .catch(() => {
+        window.localStorage.setItem("jwt", "");
+        navigate("/sign-in");
+      });
   }, []);
 
   return (

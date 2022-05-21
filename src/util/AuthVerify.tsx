@@ -1,0 +1,3 @@
+const AuthVerify = () => {};
+
+export { AuthVerify };

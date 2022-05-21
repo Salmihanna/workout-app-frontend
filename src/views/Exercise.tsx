@@ -1,52 +1,51 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { typeWorkout } from "./Workout";
+
+type typeExercise = {
+  exerciseName: string;
+};
 
 const Exercise = () => {
-  const { exercise } = useParams();
-  const [title, setTitle] = useState("");
-  const [exercises, setExercises] = useState([
-    { name: "Sit ups", setsReps: "10 x 3" },
-    { name: "Toe taps", setsReps: "15 x 3" },
-    { name: "Sit ups", setsReps: "10 x 3" },
-    { name: "Plank", setsReps: "30 s" },
-  ]);
+  const { id } = useParams();
+  const token = localStorage.getItem("jwt");
+  const API_URL = `http://localhost:8080/api/v1`;
+  const WITH_WORKOUT_ID = `/workout?id=${id}`;
+  const GET_EXERCISES = `/get-exercises?id=${id}`;
+  const [workout, setWorkout] = useState<typeWorkout>();
+  const [exercises, setExercises] = useState<typeExercise[]>([]);
+
   useEffect(() => {
-    if (exercise === "quick-core-workout") {
-      setTitle("Quick core workout");
-    }
-    if (exercise === "legday") {
-      setTitle("Legday");
-      setExercises([
-        { name: "Squats", setsReps: "10 x 3" },
-        { name: "Step ups", setsReps: "15 x 3" },
-        { name: "Forward Lunge", setsReps: "16 x 3" },
-        { name: "Hip Thrust", setsReps: "20 x 3" },
-        { name: "Squats", setsReps: "10 x 3" },
-        { name: "Step ups", setsReps: "15 x 3" },
-        { name: "Forward Lunge", setsReps: "16 x 3" },
-        { name: "Hip Thrust", setsReps: "20 x 3" },
-      ]);
-    }
-    if (exercise === "upperbody-workout") {
-      setTitle("Upperbody Workout");
-      setExercises([
-        { name: "Overhead press", setsReps: "10 x 3" },
-        { name: "Push ups", setsReps: "15 x 3" },
-        { name: "Bicep Crul", setsReps: "10 x 3" },
-        { name: "Overhead press", setsReps: "10 x 3" },
-        { name: "Push ups", setsReps: "15 x 3" },
-        { name: "Bicep Crul", setsReps: "10 x 3" },
-      ]);
-    }
+    axios
+      .get(API_URL + WITH_WORKOUT_ID, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setWorkout(res?.data);
+      });
+    axios
+      .get(API_URL + GET_EXERCISES, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((r) => {
+        setExercises(r?.data);
+      });
   }, []);
 
   return (
     <div>
-      <h1>{title}</h1>
+      <img src={`${workout?.image}`} alt=""></img>
+      <h1>{workout?.workoutName}</h1>
+      <p>{workout?.description}</p>
+
       {exercises.map((ex) => (
         <div>
-          <span>Exercise: {ex.name}, </span>
-          <span>Sets: {ex.setsReps}</span>
+          <span>{ex.exerciseName} </span>
         </div>
       ))}
     </div>

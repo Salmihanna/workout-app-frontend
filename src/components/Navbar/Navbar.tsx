@@ -6,9 +6,14 @@ import "./Navbar.css";
 const Navbar = () => {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
+  const isSignIn = window.localStorage.getItem("jwt") !== "";
 
   const onClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+  const signOut = () => {
+    window.localStorage.setItem("jwt", "");
+    closeMobileMenu();
+  };
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -28,7 +33,11 @@ const Navbar = () => {
     <>
       <nav className="navbar">
         <div className="navbar-container">
-          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+          <Link
+            to={isSignIn ? "/profile" : "/"}
+            className="navbar-logo"
+            onClick={closeMobileMenu}
+          >
             FabFit <i className="far fa-gem" />
           </Link>
           <div className="menu-icon" onClick={onClick}>
@@ -63,15 +72,27 @@ const Navbar = () => {
                 Profile
               </Link>
             </li>
-            <li className="nav-item">
-              <Link
-                to="/sign-in"
-                className="nav-links-mobile"
-                onClick={closeMobileMenu}
-              >
-                Sign in
-              </Link>
-            </li>
+            {isSignIn ? (
+              <li className="nav-item">
+                <Link
+                  to="/sign-in"
+                  className="nav-links-mobile"
+                  onClick={signOut}
+                >
+                  Sign out
+                </Link>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link
+                  to="/sign-in"
+                  className="nav-links-mobile"
+                  onClick={closeMobileMenu}
+                >
+                  Sign in
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </nav>

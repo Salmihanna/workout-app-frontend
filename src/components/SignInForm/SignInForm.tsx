@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const SignInForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassWord] = useState("");
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const validateForm = () => {

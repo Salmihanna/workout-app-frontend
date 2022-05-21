@@ -31,7 +31,7 @@ function App() {
           {/* <Route path="/run" element={<Run />} /> */}
           <Route path="/yoga" element={<Yoga />} />
           {/* <Route path="/*" element={<Navigate to="/sign-in" />} /> */}
-          <Route path="/workout/:exercise" element={<Exercise />} />
+          <Route path="/workout/:id" element={<Exercise />} />
           <Route path="/list-all-exercise" element={<ListExercises />} />
         </Routes>
       </Router>
