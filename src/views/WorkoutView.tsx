@@ -1,13 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { typeWorkout } from "./Workout";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "../components/Button/Button";
+import WorkoutPage from "../components/Workout/WorkoutPage";
+import { typeWorkout } from "./AllWorkoutsView";
+import "../components/SignInForm/SignInForm.css";
 
-type typeExercise = {
+export type typeExercise = {
   exerciseName: string;
 };
 
-const Exercise = () => {
+const WorkoutView = () => {
   const { id } = useParams();
   const token = localStorage.getItem("jwt");
   const API_URL = `http://localhost:8080/api/v1`;
@@ -15,6 +18,8 @@ const Exercise = () => {
   const GET_EXERCISES = `/get-exercises?id=${id}`;
   const [workout, setWorkout] = useState<typeWorkout>();
   const [exercises, setExercises] = useState<typeExercise[]>([]);
+  const [timer, setTimer] = useState(0);
+  setInterval(() => setTimer((n) => (n += 1)), 1000);
 
   useEffect(() => {
     axios
@@ -37,19 +42,24 @@ const Exercise = () => {
       });
   }, []);
 
-  return (
-    <div>
-      <img src={`${workout?.image}`} alt=""></img>
-      <h1>{workout?.workoutName}</h1>
-      <p>{workout?.description}</p>
+  const onClick = () => {};
 
-      {exercises.map((ex) => (
-        <div>
-          <span>{ex.exerciseName} </span>
-        </div>
-      ))}
-    </div>
+  return (
+    <>
+      <WorkoutPage workout={workout} exercises={exercises} />
+      <div className="sign-in-form-btn">
+        <Button
+          className="btns"
+          buttenStyle="btn--primary--black"
+          buttenSize="btn--large"
+          type="submit"
+          onClick={onClick}
+        >
+          Add workout
+        </Button>
+      </div>
+    </>
   );
 };
 
-export default Exercise;
+export default WorkoutView;

@@ -12,7 +12,7 @@ export type typeWorkout = {
   image: string;
 };
 
-const Workout = () => {
+const AllWorkoutsView = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("jwt");
   const API_URL = `http://localhost:8080/api/v1/all-workouts`;
@@ -55,4 +55,4 @@ const Workout = () => {
   );
 };
 
-export default Workout;
+export default AllWorkoutsView;

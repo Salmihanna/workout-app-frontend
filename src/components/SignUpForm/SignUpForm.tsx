@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Button } from "../Button/Button";
 import "../../App.css";
 import "../SignInForm/SignInForm.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -9,13 +11,34 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassWord] = useState("");
+  const navigate = useNavigate();
 
   const validateForm = () => {
     return email.length > 0 && password.length > 0;
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
+    try {
+      await axios
+        .post("http://localhost:8080/api/v1/registration", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          firstName,
+          lastName,
+          email,
+          username,
+          password,
+        })
+        .then((res) => {
+          if (res.data.jwt) {
+            window.localStorage.setItem("jwt", res.data.jwt);
+            navigate("/profile");
+          }
+        });
+    } catch (e) {
+      console.log("error", e);
+    }
   };
 
   return (
@@ -92,6 +115,7 @@ const SignUpForm = () => {
             buttenSize="btn--large"
             type="submit"
             disabled={!validateForm()}
+            onClick={handleSubmit}
           >
             Sign up
           </Button>
