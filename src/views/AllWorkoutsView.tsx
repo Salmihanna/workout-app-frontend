@@ -27,11 +27,11 @@ const AllWorkoutsView = () => {
       })
       .then((res) => {
         setWorkouts(res?.data);
-      })
-      .catch(() => {
-        window.localStorage.setItem("jwt", "");
-        navigate("/sign-in");
       });
+    // .catch(() => {
+    //   window.localStorage.setItem("jwt", "");
+    //   navigate("/sign-in");
+    // });
   }, []);
 
   return (

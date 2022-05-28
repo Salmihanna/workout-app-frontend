@@ -5,6 +5,10 @@
   font-family: "PT Sans", sans-serif;
 }
 
+h2 {
+  padding: 10px 50px 10px 50px;
+}
+
 .home,
 .sign-up {
   display: flex;

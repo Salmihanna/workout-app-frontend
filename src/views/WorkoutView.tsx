@@ -5,17 +5,20 @@ import { Button } from "../components/Button/Button";
 import WorkoutPage from "../components/Workout/WorkoutPage";
 import { typeWorkout } from "./AllWorkoutsView";
 import "../components/SignInForm/SignInForm.css";
+import { parseJwt } from "../util/parse-jwt";
 
 export type typeExercise = {
   exerciseName: string;
 };
 
 const WorkoutView = () => {
-  const { id } = useParams();
-  const token = localStorage.getItem("jwt");
+  const { id: workoutId } = useParams();
+  const token = localStorage.getItem("jwt") ?? "";
+  const jwt = token !== "" ? parseJwt(token) : null;
   const API_URL = `http://localhost:8080/api/v1`;
-  const WITH_WORKOUT_ID = `/workout?id=${id}`;
-  const GET_EXERCISES = `/get-exercises?id=${id}`;
+  const WITH_WORKOUT_ID = `/workout?id=${workoutId}`;
+  const GET_EXERCISES = `/get-exercises?id=${workoutId}`;
+  const ADD_WORKOUT = `/save-workout-on-user`;
   const [workout, setWorkout] = useState<typeWorkout>();
   const [exercises, setExercises] = useState<typeExercise[]>([]);
   const [timer, setTimer] = useState(0);
@@ -42,7 +45,23 @@ const WorkoutView = () => {
       });
   }, []);
 
-  const onClick = () => {};
+  const onClick = async () => {
+    await axios
+      .post(
+        API_URL + ADD_WORKOUT,
+        {
+          userId: jwt.id,
+          workoutId: parseInt(workoutId ?? ""),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => console.log("add"));
+  };
 
   return (
     <>
